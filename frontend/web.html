@@ -2,31 +2,33 @@
 <html lang="en">
     <head>
         <meta charset="utf-8" />
-        <meta name="viewport" content="width=device=width, initial-scale=1" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
         <title>Housing Helper | Finding Homes for Hokies</title>
         <link rel="preconnect" href="https://fonts.googleapis.com">
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
         <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
         <link rel="stylesheet" href="web.css" />
-        <link rel="icon" href="logo.svg" />
+        <link rel="icon" href="Housing_Helper_Logo.svg" />
     </head>
     <body>
         <header class="site-header">
             <div class="brand">
-                <img src="logo.svg" alt="" class="logo">
+                <img src="Housing_Helper_Logo.svg" alt="Blacksburg Housing logo" class="logo">
                 <div class="brand-text">
-                    <h1>Blacksbrg Housing</hi>
-                        <p class="muted">Find places that fit your budget, commute, and vibe.</p>
+                    <h1>Blacksburg Housing</h1>
+                    <p class="muted">Find places that fit your budget, commute, and vibe.</p>
                 </div>
             </div>
             <div class="header-actions">
-                <button id="themeToggle" class="bth ghost" aria-label="Toggle color theme">🌙</button>
+                <button id="themeToggle" class="btn ghost" aria-label="Toggle color theme">🌙</button>
                 <a class="btn primary" href="#listings">Browse Listings</a>
+                <!-- New AI Helper button -->
+                <button id="openAgent" class="btn ghost" aria-label="Open AI housing helper">🤖 AI Helper</button>
             </div>
         </header>
 
         <main>
-            <selection class="hero">
+            <section class="hero">
                 <div class="hero-copy">
                     <h2>Smart matching for Virginia Tech students</h2>
                     <p>
@@ -36,8 +38,8 @@
                     </p>
                     <a class="btn primary" href="#search">Start your search</a>
                 </div>
-                <div class="hero-illus" role="img" aria-label="Illustrion of house matching UI"></div>
-            </selection>
+                <div class="hero-illus" role="img" aria-label="Illustration of house matching UI"></div>
+            </section>
 
             <section id="search" class="panel">
                 <form id="filterForm" class="filters" aria-label="Housing search filters">
@@ -100,7 +102,6 @@
                     </div>
                 </div>
 
-                <!--REPLACE LATER-->
                 <div class="layout">
                     <aside class="map" aria-label="Map of listings">
                         <div class="map-placeholder">
@@ -117,10 +118,11 @@
                     <h4>Saved ❤️</h4>
                     <button class="btn icon" id="closeFav" aria-label="Close favorites">X</button>
                 </div>
+                <div class="drawer-body" id="favBody"></div>
             </section>
 
             <dialog id="compareModal" class="modal">
-                <div class="modal head">
+                <div class="modal-head">
                     <h4>Compare Listings</h4>
                     <form method="dialog"><button class="btn icon" aria-label="Close">X</button></form>
                 </div>
@@ -154,7 +156,7 @@
                         <input id="agentInput" class="agent-input" type="text" placeholder="Describe your ideal place..." autocomplete="off" />
                     </form>
                     <div class="agent-actions">
-                        <button class="btn primary" type="submit">Send</button>
+                        <button id="applyPlan" class="btn primary" type="button" disabled>Apply Plan to Filters</button>
                     </div>
                 </div>
              </aside>
@@ -165,6 +167,6 @@
         <footer class="site-footer">
             <p>Made for VT Hacks • Deloitte X Databricks challenge • <a href="#about" id="aboutLink">About</a></p>
         </footer>
-        <script src="app.js" defer></script>
+        <script src="web.js" defer></script>
     </body>
 </html>
