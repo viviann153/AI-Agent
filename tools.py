@@ -25,5 +25,5 @@ search_tool = Tool(
     description="Search the web for information.",
 )
 
-api_wrapper = WikipediaAPIWrapper(top_k_results=1, doc_content_char_max=100)
-wiki_tool = WikipediaAPIWrapper(api_wrapper=api_wrapper)
+api_wrapper = WikipediaAPIWrapper(top_k_results=1, doc_content_chars_max=100)
+wiki_tool = WikipediaQueryRun(api_wrapper=api_wrapper)
