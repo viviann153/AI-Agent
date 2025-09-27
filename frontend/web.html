@@ -1,0 +1,170 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device=width, initial-scale=1" />
+        <title>Housing Helper | Finding Homes for Hokies</title>
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+        <link rel="stylesheet" href="web.css" />
+        <link rel="icon" href="logo.svg" />
+    </head>
+    <body>
+        <header class="site-header">
+            <div class="brand">
+                <img src="logo.svg" alt="" class="logo">
+                <div class="brand-text">
+                    <h1>Blacksbrg Housing</hi>
+                        <p class="muted">Find places that fit your budget, commute, and vibe.</p>
+                </div>
+            </div>
+            <div class="header-actions">
+                <button id="themeToggle" class="bth ghost" aria-label="Toggle color theme">🌙</button>
+                <a class="btn primary" href="#listings">Browse Listings</a>
+            </div>
+        </header>
+
+        <main>
+            <selection class="hero">
+                <div class="hero-copy">
+                    <h2>Smart matching for Virginia Tech students</h2>
+                    <p>
+                        Filter by price, bedrooms, commute time to campus, and amenities.
+                        Save favorites and compare options side-by-side. Your team can plug in
+                        real data from Databricks later.
+                    </p>
+                    <a class="btn primary" href="#search">Start your search</a>
+                </div>
+                <div class="hero-illus" role="img" aria-label="Illustrion of house matching UI"></div>
+            </selection>
+
+            <section id="search" class="panel">
+                <form id="filterForm" class="filters" aria-label="Housing search filters">
+                    <div class="field">
+                        <label for="q">Keyword</label>
+                        <input id="q" name="q" type="search" placeholder="e.g., Foxridge, 2BR near BT bus" />
+                    </div>
+
+                    <div class="field">
+                        <label for="budget">Max Budget ($/mo)</label>
+                        <input id="budget" name="budget" type="number" min="300" step="25" placeholder="900" />
+                    </div>
+
+                    <div class="field">
+                        <label for="beds">Bedrooms</label>
+                        <select id="beds" name="beds">
+                            <option value="">Any</option>
+                            <option>Studio</option>
+                            <option>1</option>
+                            <option>2</option>
+                            <option>3</option>
+                            <option>4</option>
+                        </select>
+                    </div>
+                    
+                    <div class="field">
+                        <label for="distance">Max Distance to VT (mi)</label>
+                        <input id="distance" name="distance" type="number" min="0" step="0.1" placeholder="2.5" />
+                    </div>
+
+                    <fieldset class="field check-row">
+                        <legend>Amenities</legend>
+                        <label><input type="checkbox" name="amenities" value="parking"> Parking</label>
+                        <label><input type="checkbox" name="amenities" value="laundry"> In-unit Laundry</label>
+                        <label><input type="checkbox" name="amenities" value="pet"> Pet-friendly</label>
+                        <label><input type="checkbox" name="amenities" value="furnished"> Furnished</label>
+                    </fieldset>
+
+                    <div class="actions">
+                        <button type="submit" class="btn primary">Apply Filters</button>
+                        <button type="reset" class="btn ghost" id="resetBtn">Reset</button>
+                    </div>
+                </form>
+            </section>
+
+            <section id="results" class="results-wrap">
+                <div class="results-head">
+                    <h3 id="resultsCount">Listings</h3>
+                    <div class="results-actions">
+                        <label class="sort">
+                            Sort by
+                            <select id="sort">
+                                <option value="match">Best match</option>
+                                <option value="price-asc">Price: Low -> High</option>
+                                <option value="price-desc">Price High -> Low</option>
+                                <option value="distance-asc">Distance VT</option>
+                            </select>
+                        </label>
+                        <button class="btn" id="compareBtn" disabled>Compare (0)</button>
+                    </div>
+                </div>
+
+                <!--REPLACE LATER-->
+                <div class="layout">
+                    <aside class="map" aria-label="Map of listings">
+                        <div class="map-placeholder">
+                            <p class="muted">Map placeholder<br><small>Hook up Mapbox/Leaflet</small></p>
+                        </div>
+                    </aside>
+
+                    <section id="listings" class="cards" aria-live="polite"></section>
+                </div>
+            </section>
+
+            <section id="favorites" class="drawer" aria-hidden="true" aria-label="Saved favorites">
+                <div class="drawer-head">
+                    <h4>Saved ❤️</h4>
+                    <button class="btn icon" id="closeFav" aria-label="Close favorites">X</button>
+                </div>
+            </section>
+
+            <dialog id="compareModal" class="modal">
+                <div class="modal head">
+                    <h4>Compare Listings</h4>
+                    <form method="dialog"><button class="btn icon" aria-label="Close">X</button></form>
+                </div>
+                <div id="compareTable" class="modal-body"></div>
+            </dialog>
+
+             <aside id="agentPanel" class="agent" aria-hidden="true" aria-label="AI housing agent">
+                <div class="agent-head">
+                    <div>
+                        <strong>Housing Agent</strong>
+                        <div class="muted" style="font-size:.85rem">Tell me your must-haves & nice-to-haves</div>
+                    </div>
+                    <button class="btn icon" id="closeAgent" aria-label="Close agent">X</button>
+                </div>
+
+                <div class="agent-body" id="agentBody" role="log" aria-live="polite">
+                    <div class="msg bot">
+                        Hi! Tell me your budget, bedrooms/roommates, pets, and how you commute to VT.
+                        I'll suggest a plan and filter the listings for you.
+                    </div>
+
+                    <div class="chips">
+                        <button class="chip" data-prompt="Under $900, 2BR, walking distance, dog friendly">Under $900 • 2BR • walk • dog</button>
+                        <button class="chip" data-prompt="Studio near downtown, in-unit laundry, furnished">Studio • downtown • laundry • furnished</button>
+                        <button class="chip" data-prompt="3 roommates near BT bus line, < 15 min to campus">3 roommates • bus • &lt;15 min</button>
+                    </div>
+                </div> 
+
+                <div class="agent-foot">
+                    <form id="agentForm">
+                        <input id="agentInput" class="agent-input" type="text" placeholder="Describe your ideal place..." autocomplete="off" />
+                    </form>
+                    <div class="agent-actions">
+                        <button class="btn primary" type="submit">Send</button>
+                    </div>
+                </div>
+             </aside>
+
+             <div id="toast" role="status" aria-live="polite" class="toast" hidden></div>
+        </main>
+        
+        <footer class="site-footer">
+            <p>Made for VT Hacks • Deloitte X Databricks challenge • <a href="#about" id="aboutLink">About</a></p>
+        </footer>
+        <script src="app.js" defer></script>
+    </body>
+</html>
